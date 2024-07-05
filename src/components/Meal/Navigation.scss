@@ -1,0 +1,64 @@
+@import "../../App.scss";
+
+.navigation {
+  display: flex;
+  justify-content: right;
+  align-items: right;
+  margin: 10px;
+}
+
+.navigation button {
+  padding: 5px;
+  margin: 0 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 12px;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+}
+
+.navigation span {
+  font-size: 16px;
+  color: #333;
+}.navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.navigation button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  background-color: $clr-orange;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $clr-orange;
+  }
+
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+}
+
+.navigation span {
+  font-size: 16px;
+  color: #333;
+}
