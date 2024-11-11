@@ -7,18 +7,25 @@ import { useLocation } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader.js';
 
 const CategoryPage = ({ userData }) => {
-  const [ recipes, setRecipes ] = useState();
+  const [ recipes, setRecipes ] = useState({});
   const [ areRecipesLoading, setAreRecipesLoading ] = useState(true);
   const location = useLocation();
-  const page = Number(new URLSearchParams(location.search).get('page'));
+  console.log("LOCATION", location);
+  const [page, setPage] = useState(Number(new URLSearchParams(location.search).get('page')));
   const includingIngredients = new URLSearchParams(location.search).get('includingIngredients');
-    const url = new URL('http://localhost:8008/recipes');
-    url.searchParams.append('userId', `${userData.user ? userData.user.id : 0}`);
-    url.searchParams.append('includingIngredients', `${userData.user ? includingIngredients ?? 0 : 0}`);
-    url.searchParams.append('includingFavorites', `${userData.user ? 0 : 0}`);
-    url.searchParams.append('page', `${page ? page : 1}`)
+  const url = new URL('http://localhost:8008/recipes');
+  url.searchParams.append('userId', `${userData.user ? userData.user.id : 0}`);
+  url.searchParams.append('includingIngredients', `${userData.user ? includingIngredients ?? 0 : 0}`);
+  url.searchParams.append('includingFavorites', `${userData.user ? 0 : 0}`);
+  url.searchParams.append('page', `${page ? page : 1}`);
+  console.log("URL:", url);
+  
+  const currentPage = Number(new URLSearchParams(location.search).get('page'));
+  if (page != currentPage) {
+    setPage(currentPage);
+  }
 
-  useEffect(() => {;
+  useEffect(() => {
 
     fetch(url, {
       method: 'GET',
@@ -26,6 +33,7 @@ const CategoryPage = ({ userData }) => {
     })
       .then(response => response.json())
       .then(data => {
+        console.log("RESPONSE DATA", data);
         setRecipes(data);
         setAreRecipesLoading(false);
         console.log(recipes);
@@ -43,7 +51,7 @@ const CategoryPage = ({ userData }) => {
         </div>
       </div> */}
       {
-        (recipes && areRecipesLoading) ? <Loader /> : <MealList page={page ?? 1} recipes = { recipes } /> 
+        (recipes && areRecipesLoading) ? <Loader /> : <MealList page={page ?? 1} setPage={setPage} recipes = { recipes } /> 
       }
     </main>
   )

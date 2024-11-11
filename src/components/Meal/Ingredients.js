@@ -3,10 +3,14 @@ import "./Meal.scss";
 import Loader from '../Loader/Loader.js';
 
 const Ingredients = ({userData, ingredients}) => {
-  const ingredientDivision = Math.ceil(ingredients.length / 3);
-  const sortedIngredients = ingredients.toSorted((a, b) => a.title.localeCompare(b.title));
+  const sortedIngredients = Object.values(ingredients).toSorted((a, b) => a.title.localeCompare(b.title));
+  const ingredientDivision = Math.ceil(sortedIngredients.length / 3);
   const [ userIngredientsLoaded, setUserIngredientsLoaded ] = useState(false);
   const [ userIngredients, setUserIngredients ] = useState();
+  const [ checkboxToggle, setCheckboxToggle ] = useState(false);
+
+  console.log("BEFORE SORT", ingredients);
+  console.log("SORTED", sortedIngredients)
 
   useEffect(() => {
     const fetchIngredients = async () => {
@@ -19,20 +23,22 @@ const Ingredients = ({userData, ingredients}) => {
           }
         });
         const data = await response.json();
-        setUserIngredients(new Set(data?.map(ingredient => ingredient.ingredientId)));
+        const userIngredientsLoaded = new Set(data?.map(ingredient => ingredient.ingredientId));
+        console.log(userIngredientsLoaded);
+        setUserIngredients(userIngredientsLoaded);
         setUserIngredientsLoaded(true);
-        console.log(userIngredients);
       } catch (error) {
         console.error('Error fetching ingredients:', error);
       }
     };
 
     fetchIngredients();
-  }, [userIngredientsLoaded]);
+  }, [userIngredientsLoaded, checkboxToggle]);
 
   const postIngredient = (ingredientId, checkState) => {
 
     console.log(ingredientId, checkState);
+    
     if (checkState) {
       fetch(`http://localhost:8008/ingredient/user`, {
         method: 'POST',
@@ -46,7 +52,7 @@ const Ingredients = ({userData, ingredients}) => {
         })
       });
     } else {
-      fetch(`http://localhost:8008/ingredient/user/${userData.user.id}/${ingredientId}`, {
+      fetch(`http://localhost:8008/ingredient/${userData.user.id}/${ingredientId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -54,6 +60,8 @@ const Ingredients = ({userData, ingredients}) => {
         }
       });
     }
+    setCheckboxToggle(!checkboxToggle);
+    return checkState;
   }
 
   const checkboxInsert = ({ id, title }, index) => (
@@ -62,7 +70,7 @@ const Ingredients = ({userData, ingredients}) => {
         type='checkbox'
         value={id}
         onChange={(e) => postIngredient(id, e.target.checked)}
-        checked={userIngredients?.has(id)}
+        checked={userIngredients.has(id)}
       />
       &nbsp;{title}
     </label>
@@ -93,23 +101,9 @@ const Ingredients = ({userData, ingredients}) => {
                 </div>
                 </div>
               </div>
-
-
-              <div className='ingredients my-5 px-3 py-3'>
-                <h6 className='fs-16 text-white'>Ingredients</h6>
-              </div>
             </div>
           </div>
 
-          <div className='details-body'>
-            <div className='measures my-4'>
-              <h6 className='fs-16'>MEASUREMENTS</h6>
-            </div>
-
-            <div className='instructions my-4'>
-              <h6 className='fs-16'>INSTRUCTIONS</h6>
-            </div>
-          </div>
         </section>
       </div>
       </div>

@@ -34,8 +34,8 @@ const Navbar = ({ userData }) => {
             </Link>
             <div className='navbar-links'>
               <Link to="/ingredients" className='navbar-link'>Ingredients</Link>
-              <Link to="/recipes" className='navbar-link'>Recipes</Link>
-              <Link to="/recipes?includingIngredients=1" className='navbar-link'>Recipes For Me</Link>
+              <Link to="/recipes?page=1" className='navbar-link'>Recipes</Link>
+              <Link to="/recipes?includingIngredients=1&page=1" className='navbar-link'>Recipes For Me</Link>
             </div>
             <div className='n</div>avbar-btns flex align-center'>
               <b>

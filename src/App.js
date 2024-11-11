@@ -26,7 +26,13 @@ function App() {
     fetch('http://localhost:8008/ingredients')
       .then(response => response.json())
       .then(data => {
-        setIngredients(data);
+        console.log(data);
+        const newData = {};
+
+        for (const ingredient of data) {
+          newData[ingredient.id] = ingredient;
+        }
+        setIngredients(newData);
         setAreIngredientsLoading(false);
       })
       .catch(error => {

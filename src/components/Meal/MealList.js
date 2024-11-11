@@ -4,17 +4,17 @@ import { Link } from 'react-router-dom';
 import { COURSES, CUISINES, DIET } from '../../constants.js';
 import Navigation from './Navigation.js';
 
-const MealList = ({ page, recipes }) => {
+const MealList = ({ page, recipes, setPage }) => {
   console.log(recipes);
   return (
     <div className='section-wrapper'>
       <div className='container'>
         <div className='sc-title'>Recipes</div>
-        <Navigation currPage={page || 1} totalPages={3100} />
+        <Navigation currPage={page || 1} setPage={setPage} totalPages={Math.ceil(recipes.pages / 10)} />
         <section className='sc-meal grid'>
           {
-            recipes?.map(recipe => {
-              const {id, title, imagePath, xyPcuisine, course, diet, prep } = recipe;
+            recipes.recipes?.map(recipe => {
+              const {id, title, imagePath, cuisine, course, diet, prep } = recipe;
 
               return (
                 <Link to = {`/recipe/${id}`} className = "meal-itm align-center justify-center bg-white" key = {id}>

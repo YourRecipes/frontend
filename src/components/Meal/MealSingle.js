@@ -7,8 +7,6 @@ import { BiChevronsRight } from "react-icons/bi";
 import { AiOutlineCheckSquare } from 'react-icons/ai';
 
 const MealSingle = ({recipe, recipeDetails, recipeIngredients}) => {
-  console.log("recipe", recipe);
-  console.log("ingredients",recipeIngredients);
   const instructions = recipeDetails?.instructions
     .split('.')
     .filter(instruction => instruction.length > 1)
@@ -47,23 +45,7 @@ const MealSingle = ({recipe, recipeDetails, recipeIngredients}) => {
                   {/* <span className='text-uppercase fw-8 ls-1 my-1'></span> */}
                   <span className='py-3'>{ recipeDetails?.description }</span>
                 </div>
-
-                {/* <div className='source flex align-center'>
-                  <span className='fw-7'>Source: &nbsp;</span>
-                  <a href = {recipe.source}>
-                    {recipe.source ? (recipe?.source).substring(0, 40) + "..." : "Not found" }
-                  </a>
-                </div> */}
               </div>
-
-              {/* <div className='tags flex align-start flex-wrap'>
-                <h6 className='fs-16'>Tags:</h6>
-                <ul className='flex align-center flex-wrap'>
-                  {
-                    tags?.map((tag, idx) => (<li key = {idx} className = "fs-14">{tag}</li>))
-                  }
-                </ul>
-              </div> */}
 
               <div className='ingredients my-5 px-3 py-3'>
                 <h6 className='fs-16 text-white'>Ingredients</h6>

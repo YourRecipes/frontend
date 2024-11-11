@@ -14,6 +14,8 @@ const MealDetailsPage = ({ingredients}) => {
   const [ recipeIngredients, setRecipeIngredients ] = useState();
   const [ isMealLoading, setIsMealLoading ] = useState(true);
 
+  console.log("MEAL DETAILS", ingredients);
+
   const fetchRecipe = async () => {
     try {
       const response = await fetch(`http://localhost:8008/recipes/recipe/${id}`);
@@ -39,7 +41,7 @@ const MealDetailsPage = ({ingredients}) => {
       const response = await fetch(`http://localhost:8008/ingredients/recipe/${id}`);
       const data = await response.json();
       data.forEach(recipeIngredient => {
-          recipeIngredient.ingredient = ingredients[ recipeIngredient.ingredientId - 1 ];
+          recipeIngredient.ingredient = ingredients[ recipeIngredient.ingredientId ];
         });
       setRecipeIngredients(data);
     } catch (error) {
